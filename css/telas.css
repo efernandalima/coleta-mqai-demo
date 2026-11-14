@@ -1,0 +1,366 @@
+/* ==========================================================================
+   TELAS
+   Estilos específicos de cada tela: Nova coleta, Salvas e Exportar.
+   ========================================================================== */
+
+/* ==== Nova coleta ======================================================== */
+
+/* Resumo do sistema escolhido (linha, código, polo...) */
+.sys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.sys b {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* Data da coleta: preenchida pelo app, não editável */
+input[readonly] {
+  color: var(--muted);
+  background: var(--desativado);
+  border-color: var(--line);
+  cursor: default;
+}
+
+/* Lista de pontos de coleta */
+.secao-pontos,
+.pontos {
+  display: grid;
+  gap: 10px;
+}
+
+/* Cartão de um ponto */
+.pt {
+  display: grid;
+  gap: 12px;
+  padding: 14px 16px 16px;
+  background: var(--surface);
+  border-top: 4px solid var(--accent); /* faixa azul marca o início de cada ponto */
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+
+.pt-h {                 /* título do ponto + etiqueta "principal" */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.pt-h strong {
+  font-size: 16px;
+  color: var(--titulo);
+}
+
+.pt-h .tag {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* Identificação (mais estreita) + tipo do ponto (mais largo) */
+.row-ident {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+}
+
+/* Campo de coordenadas + botão GPS */
+.gps {
+  display: flex;
+  gap: 8px;
+}
+
+.gps input {
+  flex: 1;
+}
+
+/* Campos numéricos (pH, cor, turbidez, cloro) */
+.num {
+  align-content: start;
+}
+
+.num input {
+  font-family: var(--font-data);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.num small {            /* mensagem embaixo do campo */
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.num.bad input {        /* valor fora do padrão */
+  background: var(--bad-soft);
+  border-color: var(--bad);
+}
+
+.num.bad small {
+  font-weight: 600;
+  color: var(--bad);
+}
+
+/* Referência da Portaria no fim do formulário */
+.ref {
+  display: grid;
+  gap: 2px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ==== Salvas ============================================================= */
+
+.list {
+  display: grid;
+  gap: 10px;
+}
+
+/* Cartão de uma coleta salva */
+.rec {
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+
+.rec .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.rec .nm {
+  font-weight: 700;
+  color: var(--titulo);
+}
+
+.rec .meta {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+/* Etiquetas "Conforme / Na planilha" à direita do cartão */
+.rec-status {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+}
+
+.rec .aviso {
+  color: var(--warn);
+}
+
+/* Resumo dos valores (P1: pH … ) */
+.vals {
+  overflow-x: auto;
+  white-space: nowrap;
+  font-family: var(--font-data);
+  font-size: 12.5px;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--muted);
+}
+
+/* Valor impossível / coordenada fora da região: borda tracejada (diferente de "fora do padrão") */
+.num.erro input,
+.coord.erro input {
+  border: 2px dashed var(--bad);
+}
+
+.num.erro small,
+.coord small {
+  font-weight: 600;
+  color: var(--bad);
+}
+
+/* ==== Painel do mês ====================================================== */
+
+.pn-topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.pn-mes { min-width: 160px; }
+
+/* Equipe: origem dos dados + botão Atualizar */
+.pn-equipe {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.pn-equipe .hint { margin: 0; }
+
+/* Quatro números do resumo */
+.pn-resumo {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.pn-num {
+  display: grid;
+  gap: 2px;
+  padding: 10px 8px;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--accent);
+  border-radius: var(--raio-campo);
+}
+
+.pn-num b { font-size: 26px; line-height: 1.1; color: var(--titulo); font-variant-numeric: lining-nums tabular-nums; }
+.pn-num span { font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.pn-num small { font-size: 11px; font-weight: 600; color: var(--accent); }
+
+/* Barra de progresso: largura vem da variável --pct (definida pelo JS) */
+.pn-barra {
+  --pct: 0%;
+  height: 8px;
+  overflow: hidden;
+  background: var(--desativado);
+  border-radius: var(--raio-campo);
+}
+
+.pn-barra span {
+  display: block;
+  width: var(--pct);
+  height: 100%;
+  background: var(--ok);
+  transition: width 0.3s;
+}
+
+.pn-filtro { flex-wrap: wrap; }
+
+/* Lista por polo */
+.pn-lista {
+  display: grid;
+  gap: 12px;
+}
+
+.pn-polo {
+  padding: 4px 16px 8px;
+  background: var(--surface);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+
+.pn-polo h3 {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 12px 0 6px;
+  font-size: 15px;
+  color: var(--titulo);
+}
+
+.pn-polo h3 small { font-weight: 400; color: var(--muted); }
+
+.pn-polo ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pn-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+}
+
+.pn-nome { min-width: 0; }
+.pn-nome span { color: var(--muted); font-size: 13px; }
+.pn-nome small { display: block; font-size: 12px; color: var(--muted); }
+.pn-nome em { font-style: normal; font-weight: 600; color: var(--bad); }
+
+/* Bolinha colorida da etapa */
+.pn-ponto {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--line);
+}
+
+.pn-ponto.warn { background: var(--warn-fundo); }
+.pn-ponto.neu  { background: var(--accent); }
+.pn-ponto.ok   { background: var(--ok); }
+
+/* Título do painel fica ao lado do mês: sem a linha embaixo */
+.pn-topo h2 {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+/* Filtros do painel: todos numa linha (o texto pode quebrar dentro do botão) */
+.pn-filtro.seg {
+  flex-wrap: nowrap;
+}
+
+.pn-filtro.seg button {
+  padding-inline: 3px;
+  font-size: 12.5px;
+  line-height: 1.25;
+}
+
+/* ==== Lembrete de coletas paradas (topo de Nova coleta) ================== */
+
+.alert.lembrete {
+  background: var(--warn-soft);
+  border-left-color: var(--warn-fundo);
+}
+
+.lembrete li {
+  margin-top: 6px;
+}
+
+.lembrete li .btn {
+  display: flex;
+  width: fit-content;
+  margin-top: 6px;
+}
+
+/* ==== Demo: exemplos e reinício (topo de Salvas) ========================== */
+
+.demo-acoes {
+  display: grid;
+  gap: 10px;
+}
+
+/* ==== IA: sugestão de justificativa e resumo do mês ====================== */
+
+.ia-bloco {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+}
+
+/* Aviso "Sugestão gerada por IA — revise antes de salvar" */
+#iaMsg .chip,
+#iaResumo .chip {
+  margin-right: 6px;
+}
+
+/* Texto do resumo: mantém as quebras de linha da resposta */
+.ia-texto {
+  margin-top: 8px;
+  padding: 12px;
+  font-size: 14px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--raio-campo);
+}

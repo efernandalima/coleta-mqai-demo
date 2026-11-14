@@ -1,0 +1,30 @@
+/* ==========================================================================
+   FONTES
+   Raleway (base da Rawline, fonte do Padrão Digital de Governo – gov.br).
+   Arquivos guardados no próprio app (pasta fonts/): funciona sem internet.
+   Licença: SIL Open Font License 1.1 (fonts/OFL-Raleway.txt).
+   ========================================================================== */
+
+@font-face {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/raleway-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/raleway-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/raleway-latin-700-normal.woff2") format("woff2");
+}

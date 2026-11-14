@@ -1,0 +1,4 @@
+# Evita diferenças de final de linha entre Windows e Linux
+* text=auto eol=lf
+*.png binary
+*.xlsx binary

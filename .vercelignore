@@ -1,0 +1,7 @@
+tests
+docs
+README.md
+.vscode
+.editorconfig
+.prettierrc
+.prettierignore

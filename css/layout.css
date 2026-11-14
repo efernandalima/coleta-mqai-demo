@@ -1,0 +1,167 @@
+/* ==========================================================================
+   LAYOUT
+   Estrutura da página: cabeçalho, botão Voltar, área de conteúdo e menu inferior.
+   ========================================================================== */
+
+/* ---- Faixa da demo ----
+   Fica sempre visível no topo, mesmo ao rolar a página. */
+
+.faixa-demo {
+  position: sticky;
+  top: 0;
+  z-index: 8;
+  padding: calc(6px + env(safe-area-inset-top, 0px)) var(--gutter) 6px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #333;
+  text-align: center;
+  background: var(--warn-fundo);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.2);
+}
+
+/* ---- Cabeçalho ---- */
+
+header {
+  background: var(--surface);
+  color: var(--fg);
+  box-shadow: var(--sombra);
+}
+
+header .cab {
+  display: flex;               /* textos à esquerda, botão Instalar à direita */
+  align-items: center;
+  gap: 12px;
+  max-width: var(--largura);
+  margin-inline: var(--margem);
+  padding: 10px var(--gutter) 12px;
+}
+
+header .cab-texto {
+  flex: 1;
+  min-width: 0;
+}
+
+header .orgao {                /* linha pequena acima do título */
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+header .t {
+  font-size: 21px;             /* tamanho do título */
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--titulo);
+  text-wrap: balance;          /* se quebrar linha, divide de forma equilibrada */
+}
+
+header .s {
+  margin-top: 2px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+header .btn-instalar {
+  flex: none;
+}
+
+/* ---- Botão Voltar ---- */
+
+.barra-voltar {
+  max-width: var(--largura);
+  margin-inline: var(--margem);
+  padding-inline: var(--gutter);
+}
+
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+  padding: 12px 0 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--accent);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.voltar:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---- Área de conteúdo (cada tela é um <main>) ---- */
+
+main {
+  display: grid;
+  gap: 16px;
+  max-width: var(--largura);
+  margin-inline: var(--margem);
+  padding-inline: var(--gutter);
+  padding-block: 16px;
+}
+
+/* ---- Rodapé com os créditos ---- */
+
+.creditos {
+  margin-top: 8px;
+  padding: 18px var(--gutter) 22px;
+  font-size: 12.5px;
+  color: #fff;
+  text-align: center;
+  background: var(--rodape);
+}
+
+.creditos > * {
+  max-width: var(--largura);
+  margin: 0 auto;
+}
+
+.creditos .orgao {
+  font-weight: 700;
+}
+
+.creditos .autor {
+  margin-top: 6px;
+  padding-top: 8px;
+  color: rgb(255 255 255 / 0.75);
+  border-top: 1px solid rgb(255 255 255 / 0.2);
+}
+
+/* ---- Menu inferior ---- */
+
+nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  background: var(--surface);
+  box-shadow: 0 -1px 6px rgb(0 0 0 / 0.12);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+nav button {
+  flex: 1;
+  max-width: calc(var(--largura) / 4); /* em telas largas, acompanha a largura do conteúdo */
+  padding: 12px 4px 13px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  background: none;
+  border: 0;
+  border-top: 4px solid transparent;
+  cursor: pointer;
+}
+
+nav button.on {
+  color: var(--accent);
+  font-weight: 700;
+  border-top-color: var(--accent);
+}

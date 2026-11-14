@@ -1,0 +1,14 @@
+{
+  "name": "coleta-mqai-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Demo pública (dados fictícios) do Coleta MQAI: PWA offline para coleta de qualidade da água, com validação pela Portaria 888/2021, relatório PDF, planilha e sugestões por IA.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test",
+    "dev": "npx --yes serve -l 5173 ."
+  }
+}

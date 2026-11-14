@@ -1,0 +1,264 @@
+/* ==========================================================================
+   COMPONENTES
+   Peças reaproveitadas em várias telas: cartões, grades, botões, alertas,
+   etiquetas, aviso flutuante (toast).
+   ========================================================================== */
+
+/* ---- Cartão ---- */
+
+.card {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  padding: 16px;
+  background: var(--surface);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+
+/* ---- Grades de campos ----
+   .row  = 2 colunas (datas, identificação/tipo, coliformes/E. coli)
+   .row3 = 4 colunas (pH, cor, turbidez, cloro)
+   minmax(0, 1fr) deixa a coluna encolher sem invadir a vizinha. */
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.row3 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+/* ---- Botões ---- */
+
+.btn {
+  min-height: 40px;
+  padding: 8px 20px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--sobre-accent);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: var(--raio-botao);
+  cursor: pointer;
+}
+
+.btn.ghost {          /* contorno, sem preenchimento */
+  color: var(--accent);
+  background: transparent;
+}
+
+.btn.danger {         /* ações destrutivas (excluir) */
+  color: var(--bad);
+  background: transparent;
+  border-color: var(--bad);
+}
+
+.btn.sm {             /* tamanho pequeno */
+  min-height: 32px;
+  padding: 4px 14px;
+  font-size: 13.5px;
+}
+
+.btn-instalar {
+  white-space: nowrap;
+}
+
+.btn-arquivo {        /* <label> com cara de botão para escolher arquivo */
+  display: inline-block;
+  color: var(--accent);
+}
+
+/* Linha de botões */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.actions.fim {
+  justify-content: flex-end;
+}
+
+/* ---- Botões segmentados (Sim / Não, Ausente / Presente / N/A) ---- */
+
+.seg {
+  display: flex;
+  overflow: hidden;
+  border: 1px solid var(--campo);
+  border-radius: var(--raio-campo);
+}
+
+.seg button {
+  flex: 1;
+  padding: 9px 2px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--fg);
+  background: var(--surface);
+  border: 0;
+  cursor: pointer;
+}
+
+.seg button + button {
+  border-left: 1px solid var(--campo);
+}
+
+.seg button.on {
+  color: var(--sobre-accent);
+  font-weight: 600;
+  background: var(--accent);
+}
+
+.seg button.on.badv {  /* "Presente" selecionado fica vermelho */
+  background: var(--bad);
+}
+
+/* ---- Caixa de seleção com texto ao lado ---- */
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg);
+}
+
+.check input {
+  width: auto;
+}
+
+/* ---- Alertas ---- */
+
+/* Mensagens no padrão gov.br: fundo claro com faixa colorida à esquerda */
+.alert {               /* padrão: erro / fora do padrão */
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--fg);
+  background: var(--bad-soft);
+  border-left: 4px solid var(--bad);
+  border-radius: var(--raio-campo);
+}
+
+.alert.ok {
+  background: var(--ok-soft);
+  border-left-color: var(--ok);
+}
+
+.alert.info {
+  background: var(--accent-soft);
+  border-left-color: var(--accent);
+}
+
+.alert.erro {          /* erro de digitação: borda tracejada para chamar atenção */
+  border: 2px dashed var(--bad);
+  border-left-width: 4px;
+}
+
+.alert ul {
+  margin: 4px 0 0;
+  padding-left: 18px;
+}
+
+/* ---- Etiquetas (chips) e contador (badge) ---- */
+
+/* Etiquetas sólidas, como as "tags" do gov.br */
+.chip {
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  border-radius: var(--raio-campo);
+}
+
+.chip.ok   { color: var(--surface); background: var(--ok); }
+.chip.bad  { color: var(--surface); background: var(--bad); }
+.chip.neu  { color: var(--sobre-accent); background: var(--accent); }
+.chip.warn { color: #333;    background: var(--warn-fundo); }
+
+.badge {
+  display: inline-block;
+  min-width: 18px;
+  margin-left: 4px;
+  padding: 0 5px;
+  font-size: 11px;
+  color: var(--sobre-accent);
+  background: var(--accent);
+  border-radius: 9px;
+}
+
+/* ---- Aviso de nova versão ---- */
+
+.atualizacao {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--altura-menu) + 10px + env(safe-area-inset-bottom, 0px));
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+  max-width: calc(100vw - 2 * var(--gutter));
+  padding: 10px 12px 10px 16px;
+  font-size: 14px;
+  color: var(--fg);
+  background: var(--surface);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--raio);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.25);
+  transform: translateX(-50%);
+}
+
+/* ---- Opções avançadas recolhidas ---- */
+
+.avancado summary {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.avancado[open] {
+  display: grid;
+  gap: 10px;
+}
+
+/* ---- Aviso flutuante (toast) ---- */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--altura-menu) + 10px + env(safe-area-inset-bottom, 0px));
+  z-index: 9;
+  max-width: 90vw;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: var(--bg);
+  background: var(--fg);
+  border-radius: var(--raio-campo);
+  transform: translateX(-50%);
+}
+
+/* ---- Confirmação dentro do cartão (ex.: "Excluir esta coleta?") ---- */
+
+.confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--bad);
+}
+
+/* ---- Textos de apoio ---- */
+
+.hint {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--muted);
+}

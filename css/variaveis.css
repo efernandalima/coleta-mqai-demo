@@ -1,0 +1,105 @@
+/* ==========================================================================
+   VARIÁVEIS (design tokens)
+   Cores, fontes e medidas usadas em todo o app. Mude aqui para mudar em tudo.
+   Cores e medidas seguem o Padrão Digital de Governo (Design System gov.br).
+   ========================================================================== */
+
+:root {
+  /* ---- Largura e alinhamento ----
+     --largura: largura máxima do conteúdo em telas grandes
+                (680px = estreito | 1100px = largo | 100% = tela toda)
+     --margem:  auto = centralizado | 0 = encostado à esquerda */
+  --largura: 1100px;
+  --margem: auto;
+
+  /* ---- Cores do app (tema claro, paleta gov.br) ---- */
+  --bg: #f8f8f8;          /* fundo da página */
+  --surface: #ffffff;     /* fundo dos blocos, cabeçalho, menu e campos */
+  --fg: #333333;          /* texto principal */
+  --titulo: #071d41;      /* títulos (azul-escuro gov.br) */
+  --muted: #555555;       /* texto secundário */
+  --line: #cccccc;        /* bordas e divisórias */
+  --campo: #888888;       /* borda dos campos de formulário */
+  --desativado: #ededed;  /* campo só leitura */
+  --accent: #1351b4;      /* azul gov.br: botões, links, menu ativo */
+  --accent-soft: #dbe8fb;
+  --sobre-accent: #ffffff; /* texto em cima do azul (botões, abas) */
+  --ok: #168821;          /* conforme / na planilha */
+  --ok-soft: #e3f5e1;
+  --bad: #c41c00;         /* fora do padrão / erro */
+  --bad-soft: #fde0db;
+  --warn: #8a6100;        /* atenção (texto) */
+  --warn-fundo: #ffcd07;  /* atenção (preenchimento) */
+  --warn-soft: #fff5c2;
+  --foco: #c2850c;        /* contorno de foco (padrão gov.br) */
+  --rodape: #071d41;      /* fundo do rodapé institucional */
+
+  /* ---- Fontes ---- */
+  --font-ui: "Raleway", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-data: var(--font-ui); /* números usam algarismos de mesma largura (tabular-nums) */
+
+  /* ---- Medidas ---- */
+  --raio: 4px;            /* cantos dos blocos */
+  --raio-campo: 4px;      /* cantos dos campos */
+  --raio-botao: 100em;    /* botões arredondados, como no gov.br */
+  --sombra: 0 1px 6px rgb(0 0 0 / 0.16);
+  --gutter: 16px;         /* espaço lateral da página */
+  --altura-menu: 76px;    /* altura do menu inferior */
+
+  color-scheme: light;
+}
+
+/* ---- Tema escuro ----
+   Vale quando o celular está no modo escuro (a menos que o tema claro seja forçado). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1426;
+    --surface: #13203a;
+    --fg: #e6e6e6;
+    --titulo: #ffffff;
+    --muted: #b4bccb;
+    --line: #2e3d5a;
+    --campo: #6b7a96;
+    --desativado: #1b2a47;
+    --accent: #8cb2ef;
+    --accent-soft: #1b3361;
+    --sobre-accent: #071d41;
+    --ok: #6fcf7a;
+    --ok-soft: #173622;
+    --bad: #ff8a75;
+    --bad-soft: #43201a;
+    --warn: #ffd84d;
+    --warn-fundo: #ffcd07;
+    --warn-soft: #3d3313;
+    --foco: #ffcd07;
+    --rodape: #050e1f;
+    --sombra: 0 1px 6px rgb(0 0 0 / 0.5);
+    color-scheme: dark;
+  }
+}
+
+/* Tema escuro forçado (mesmos valores do bloco acima). */
+:root[data-theme="dark"] {
+  --bg: #0b1426;
+  --surface: #13203a;
+  --fg: #e6e6e6;
+  --titulo: #ffffff;
+  --muted: #b4bccb;
+  --line: #2e3d5a;
+  --campo: #6b7a96;
+  --desativado: #1b2a47;
+  --accent: #8cb2ef;
+  --accent-soft: #1b3361;
+  --sobre-accent: #071d41;
+  --ok: #6fcf7a;
+  --ok-soft: #173622;
+  --bad: #ff8a75;
+  --bad-soft: #43201a;
+  --warn: #ffd84d;
+  --warn-fundo: #ffcd07;
+  --warn-soft: #3d3313;
+  --foco: #ffcd07;
+  --rodape: #050e1f;
+  --sombra: 0 1px 6px rgb(0 0 0 / 0.5);
+  color-scheme: dark;
+}

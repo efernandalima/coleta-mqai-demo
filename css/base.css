@@ -1,0 +1,104 @@
+/* ==========================================================================
+   BASE
+   Regras gerais de HTML: reset, texto, títulos e campos de formulário.
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font: 15px/1.5 var(--font-ui);
+  font-variant-numeric: lining-nums; /* números alinhados (a Raleway usa "estilo antigo" por padrão) */
+  /* espaço para o menu fixo no rodapé não cobrir o conteúdo */
+  padding-bottom: calc(var(--altura-menu) + env(safe-area-inset-bottom, 0px));
+}
+
+h2 {
+  margin: 0;
+  padding-bottom: 6px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--titulo);
+  border-bottom: 1px solid var(--line);
+}
+
+/* ---- Campos de formulário ---- */
+
+label {
+  display: grid;
+  align-content: start; /* campos lado a lado ficam alinhados pelo topo */
+  gap: 4px;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+label small {
+  font-weight: 400;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 9px 12px;
+  font: inherit;
+  font-weight: 400;
+  color: var(--fg);
+  background: var(--surface);
+  border: 1px solid var(--campo);
+  border-radius: var(--raio-campo);
+}
+
+input[type="date"] {
+  max-width: 100%;
+}
+
+/* Mesma altura para campos de texto, data e listas (lado a lado ficam alinhados) */
+input:not([type="checkbox"]):not([type="file"]),
+select {
+  min-height: 44px;
+}
+
+textarea {
+  min-height: 72px;
+  resize: vertical;
+}
+
+/* Campo selecionado: borda azul com um halo suave */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-soft);
+}
+
+/* Botões: o contorno só aparece ao navegar pelo teclado (não no toque) */
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Quem prefere menos movimento no sistema não vê transições. */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

@@ -1,0 +1,7 @@
+node_modules/
+.DS_Store
+*.xlsx
+*.pdf
+coletas_mqai_*.json
+.env*
+.vercel

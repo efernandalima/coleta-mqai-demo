@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#071d41">
+<title>Coleta MQAI — Demo</title>
+<meta name="description" content="Versão de demonstração, com dados fictícios, de um app offline para registrar coletas de monitoramento da qualidade da água, validar pela Portaria 888/2021, gerar relatório em PDF e planilha, com apoio de IA.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Coleta MQAI Demo">
+<!-- Estilos: a ordem importa (os de baixo podem sobrescrever os de cima) -->
+<link rel="stylesheet" href="css/fontes.css">
+<link rel="stylesheet" href="css/variaveis.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/componentes.css">
+<link rel="stylesheet" href="css/telas.css">
+<link rel="stylesheet" href="css/responsivo.css">
+</head>
+<body>
+<div class="faixa-demo" role="note">Versão de demonstração — dados fictícios</div>
+<header>
+  <div class="cab">
+    <div class="cab-texto">
+      <div class="orgao">Monitoramento da Qualidade da Água</div>
+      <div class="t">COLETA MQAI — DEMO</div>
+      <div class="s" id="netStatus">Conectado · dados fictícios, armazenados neste dispositivo</div>
+    </div>
+    <button type="button" id="instalar" class="btn sm btn-instalar" hidden>Instalar</button>
+  </div>
+</header>
+<div class="barra-voltar"><button type="button" id="voltar" class="voltar" hidden>‹ Voltar</button></div>
+
+<main id="view-nova">
+  <div id="lembrete"></div>
+  <form id="f" class="card" autocomplete="off">
+    <h2 id="formTitle">Nova coleta</h2>
+    <label>Aldeia / sistema
+      <select id="sis" required></select>
+    </label>
+    <div class="sys" id="sisInfo"></div>
+    <div class="row">
+      <label>Data da coleta<input type="date" id="dColeta" readonly tabindex="-1"><small class="hint">Preenchida automaticamente com a data atual.</small></label>
+      <label>Mês da planilha<select id="mes"></select></label>
+    </div>
+    <label>Responsável pela coleta<input id="respColeta" placeholder="Nome completo do responsável pela coleta"></label>
+    <label>O tratamento está em operação?
+      <div class="seg" id="oper" data-val=""><button type="button" data-v="SIM">Sim</button><button type="button" data-v="NÃO">Não</button><button type="button" data-v="">Não informado</button></div>
+    </label>
+  </form>
+
+  <section class="card" id="blocoAnalise" hidden>
+    <h2>Análise</h2>
+    <p class="hint">Preencha quando o resultado estiver disponível (normalmente no dia seguinte à coleta). A coleta só entra na planilha e no PDF após <b>Concluir análise</b>.</p>
+    <div class="row">
+      <label>Data da análise<input type="date" id="dAnalise"></label>
+      <label>2ª data de análise (se houver)<input type="date" id="dAnalise2"></label>
+    </div>
+    <label>Responsável técnico pela análise<input id="resp" placeholder="Nome completo do responsável técnico"></label>
+  </section>
+
+  <section class="secao-pontos">
+    <h2>Pontos de coleta</h2>
+    <p class="hint">Caso algum ponto não tenha sido coletado (por exemplo, por falta de água na aldeia), deixe-o em branco e registre o motivo em Observações.</p>
+    <div id="pts" class="pontos"></div>
+    <div class="actions"><button class="btn ghost" type="button" id="addPt">+ Adicionar ponto</button><button class="btn ghost" type="button" id="rmPt">Remover último ponto</button></div>
+  </section>
+
+  <section class="card">
+    <h2>Conformidade</h2>
+    <div id="conf"></div>
+    <div id="iaBloco" class="ia-bloco" hidden>
+      <button class="btn ghost" type="button" id="iaSugerir">Sugerir justificativa e ações (IA)</button>
+      <p class="hint">Envia só os dados técnicos: tipo de ponto, parâmetros, valores e limites da Portaria 888/2021. Aldeia, nomes e coordenadas não são enviados.</p>
+    </div>
+    <label>Justificativa para amostras fora do padrão e ações tomadas (coluna P)
+      <textarea id="just" placeholder="Ex.: pH naturalmente ácido do aquífero; reforço da cloração no reservatório em 25/09."></textarea>
+    </label>
+    <div id="iaMsg" aria-live="polite"></div>
+    <label>Observações gerais (coluna CE)<textarea id="obs"></textarea></label>
+    <label class="check"><input type="checkbox" id="coordObs" checked> Incluir as coordenadas dos pontos nas observações</label>
+    <div id="pend"></div>
+  </section>
+
+  <div class="actions fim">
+    <button class="btn ghost" type="button" id="limpar">Limpar formulário</button>
+    <button class="btn" type="button" id="salvar">Salvar coleta</button>
+    <button class="btn" type="button" id="concluir" hidden>Concluir análise</button>
+  </div>
+  <div class="ref" id="ref"><span>Referência (Portaria 888/2021): pH 6.0–9.0 · Cor ≤ 15 uH · Turbidez ≤ 5 uT · Cloro residual livre 0.2–5.0 mg/L (fora da captação) · Coliformes totais e E. coli ausentes em 100 mL.</span><span>Parâmetro não analisado deve ficar em branco (não informe 0).</span></div>
+</main>
+
+<main id="view-lista" hidden>
+  <h2>Coletas salvas neste aparelho</h2>
+  <section class="card demo-acoes">
+    <p class="hint">Demo: carregue 6 coletas fictícias (2 conformes, 3 fora do padrão e 1 aguardando análise) para explorar o app, ou apague tudo para recomeçar.</p>
+    <div class="actions" id="demoBotoes">
+      <button class="btn" type="button" id="demoExemplos">Carregar exemplos</button>
+      <button class="btn ghost" type="button" id="demoReiniciar">Reiniciar demo</button>
+    </div>
+  </section>
+  <div class="list" id="lista"></div>
+</main>
+
+<main id="view-painel" hidden>
+  <section class="card">
+    <div class="pn-topo">
+      <h2>Painel do mês</h2>
+      <label class="pn-mes">Mês<select id="pnMes"></select></label>
+    </div>
+    <div class="pn-resumo" id="pnResumo"></div>
+    <div class="pn-barra" id="pnBarra" role="presentation"><span></span></div>
+    <p class="hint" id="pnBarraTxt"></p>
+    <div class="seg pn-filtro" id="pnFiltro">
+      <button type="button" data-f="todas" class="on">Todas</button>
+      <button type="button" data-f="pendente">Pendentes</button>
+      <button type="button" data-f="coletada">Aguardando</button>
+      <button type="button" data-f="analisada">Analisadas</button>
+      <button type="button" data-f="enviada">Na planilha</button>
+    </div>
+    <p class="hint" id="pnAviso">Exibe as coletas armazenadas <b>neste dispositivo</b>.</p>
+  </section>
+  <div id="pnLista" class="pn-lista"></div>
+</main>
+
+<main id="view-exportar" hidden>
+
+  <section class="card">
+    <h2>Planilha modelo (.xlsx)</h2>
+    <p class="hint">Gera, no próprio aparelho, a planilha modelo da demo: uma aba por mês e uma linha por sistema, com as coletas analisadas. As coletas incluídas passam a constar como <b>Na planilha</b>.</p>
+    <label>Quais coletas incluir
+      <select id="filtro"><option value="pend">Só as analisadas ainda fora da planilha</option><option value="all">Todas as analisadas</option></select>
+    </label>
+    <div id="prev"></div>
+    <div class="actions">
+      <button class="btn" type="button" id="xlsxGerar">Gerar planilha modelo</button>
+    </div>
+    <div id="xlsxMsg"></div>
+  </section>
+  <section class="card">
+    <h2>Relatórios em PDF</h2>
+    <p class="hint">Relatório com cabeçalho, responsáveis, datas e uma tabela por ponto. Para uma única aldeia, use o botão <b>Relatório PDF</b> na aba Salvas. Aqui é gerado um único PDF com todas as aldeias do mês, uma por página.</p>
+    <label>Mês<select id="pdfMes"></select></label>
+    <div class="actions"><button class="btn" type="button" id="pdfMesBtn">Gerar PDF do mês</button></div>
+    <div id="pdfMsg"></div>
+  </section>
+  <section class="card">
+    <h2>Resumo do mês (IA)</h2>
+    <p class="hint">Texto curto com as não conformidades por sistema e as prioridades de ação, a partir das coletas analisadas do mês. São enviados só o nome do sistema e os dados técnicos (parâmetros, valores e limites da Portaria 888/2021).</p>
+    <label>Mês<select id="iaMes"></select></label>
+    <div class="actions"><button class="btn" type="button" id="iaResumoBtn">Resumo do mês (IA)</button></div>
+    <div id="iaResumo" aria-live="polite"></div>
+  </section>
+  <section class="card">
+    <h2>Cópia de segurança</h2>
+    <p class="hint">Os dados ficam armazenados apenas neste dispositivo. Exporte uma cópia antes de limpar os dados do navegador ou trocar de aparelho, e importe-a no novo dispositivo para reunir as coletas.</p>
+    <div class="actions">
+      <button class="btn ghost" type="button" id="bkExp">Exportar cópia (.json)</button>
+      <label class="btn ghost btn-arquivo">Importar cópia<input type="file" id="bkImp" accept=".json,application/json" hidden></label>
+    </div>
+  </section>
+</main>
+
+<footer class="creditos">
+  <div class="orgao">Coleta MQAI — Demo</div>
+  <div>Versão de demonstração com dados fictícios · projeto de portfólio</div>
+  <div class="autor">Desenvolvido por <b>Fernanda Lima</b></div>
+</footer>
+
+<nav>
+  <button type="button" data-v="nova" class="on">Nova coleta</button>
+  <button type="button" data-v="lista">Salvas <span class="badge" id="nPend">0</span></button>
+  <button type="button" data-v="painel">Painel</button>
+  <button type="button" data-v="exportar">Exportar</button>
+</nav>
+<div class="toast" id="toast" hidden></div>
+<div class="atualizacao" id="atualizacao" role="status" hidden>
+  <span>Nova versão do app disponível.</span>
+  <button type="button" class="btn sm" id="atualizar">Atualizar</button>
+</div>
+<!-- Código do app (as bibliotecas de PDF e Excel são carregadas só quando usadas: js/bibliotecas.js) -->
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
