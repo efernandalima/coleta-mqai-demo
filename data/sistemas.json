@@ -1,0 +1,226 @@
+[
+ {
+  "linha": 5,
+  "id": 1,
+  "polo": "POLO A",
+  "municipio": "MUNICÍPIO A",
+  "aldeia": "ALDEIA DEMO 1",
+  "siasi": 90001,
+  "sistema": "SAA 1",
+  "tipo": "SAA",
+  "populacao": 420,
+  "pontosCaptacao": 1,
+  "pontosAmostragem": 3,
+  "tratamento": "SIM, COM DESINFECÇÃO",
+  "pontosPadrao": [
+   {
+    "identificacao": "Captação 1",
+    "tipo": "CAPTAÇÃO SUBTERRÂNEA"
+   },
+   {
+    "identificacao": "Reservatório 1",
+    "tipo": "SAÍDA DO RESERVATÓRIO COM ÁGUA TRATADA"
+   },
+   {
+    "identificacao": "Ponta de rede 1",
+    "tipo": "CASA (OU CHAFARIZ INDIVIDUAL)"
+   }
+  ]
+ },
+ {
+  "linha": 6,
+  "id": 2,
+  "polo": "POLO A",
+  "municipio": "MUNICÍPIO A",
+  "aldeia": "ALDEIA DEMO 1",
+  "siasi": 90001,
+  "sistema": "SAA 2",
+  "tipo": "SAA",
+  "populacao": 420,
+  "pontosCaptacao": 1,
+  "pontosAmostragem": 3,
+  "tratamento": "SIM, COM DESINFECÇÃO",
+  "pontosPadrao": [
+   {
+    "identificacao": "Captação 2",
+    "tipo": "CAPTAÇÃO SUBTERRÂNEA"
+   },
+   {
+    "identificacao": "Reservatório 2",
+    "tipo": "SAÍDA DO RESERVATÓRIO COM ÁGUA TRATADA"
+   },
+   {
+    "identificacao": "Ponta de rede 2",
+    "tipo": "CASA (OU CHAFARIZ INDIVIDUAL)"
+   }
+  ]
+ },
+ {
+  "linha": 7,
+  "id": 3,
+  "polo": "POLO A",
+  "municipio": "MUNICÍPIO A",
+  "aldeia": "ALDEIA DEMO 2",
+  "siasi": 90002,
+  "sistema": "SAA 1",
+  "tipo": "SAA",
+  "populacao": 185,
+  "pontosCaptacao": 1,
+  "pontosAmostragem": 3,
+  "tratamento": "SIM, COM DESINFECÇÃO",
+  "pontosPadrao": [
+   {
+    "identificacao": "Captação 3",
+    "tipo": "CAPTAÇÃO SUBTERRÂNEA"
+   },
+   {
+    "identificacao": "Reservatório 3",
+    "tipo": "SAÍDA DO RESERVATÓRIO COM ÁGUA TRATADA"
+   },
+   {
+    "identificacao": "Ponta de rede 3",
+    "tipo": "CASA (OU CHAFARIZ INDIVIDUAL)"
+   }
+  ]
+ },
+ {
+  "linha": 8,
+  "id": 4,
+  "polo": "POLO B",
+  "municipio": "MUNICÍPIO B",
+  "aldeia": "ALDEIA DEMO 3",
+  "siasi": 90003,
+  "sistema": "SAA 1",
+  "tipo": "SAA",
+  "populacao": 310,
+  "pontosCaptacao": 1,
+  "pontosAmostragem": 3,
+  "tratamento": "SIM, COM DESINFECÇÃO",
+  "pontosPadrao": [
+   {
+    "identificacao": "Captação 4",
+    "tipo": "CAPTAÇÃO SUBTERRÂNEA"
+   },
+   {
+    "identificacao": "Reservatório 4",
+    "tipo": "SAÍDA DO RESERVATÓRIO COM ÁGUA TRATADA"
+   },
+   {
+    "identificacao": "Ponta de rede 4",
+    "tipo": "CASA (OU CHAFARIZ INDIVIDUAL)"
+   }
+  ]
+ },
+ {
+  "linha": 9,
+  "id": 5,
+  "polo": "POLO B",
+  "municipio": "MUNICÍPIO B",
+  "aldeia": "ALDEIA DEMO 4",
+  "siasi": 90004,
+  "sistema": "SAC 1",
+  "tipo": "SAC",
+  "populacao": 64,
+  "pontosCaptacao": 1,
+  "pontosAmostragem": 3,
+  "tratamento": "SIM, SEM DESINFECÇÃO",
+  "pontosPadrao": [
+   {
+    "identificacao": "Captação 5",
+    "tipo": "CAPTAÇÃO SUBTERRÂNEA"
+   },
+   {
+    "identificacao": "Reservatório 5",
+    "tipo": "SAÍDA DO RESERVATÓRIO COM ÁGUA BRUTA"
+   },
+   {
+    "identificacao": "Ponta de rede 5",
+    "tipo": "CHAFARIZ (COLETIVO)"
+   }
+  ]
+ },
+ {
+  "linha": 10,
+  "id": 6,
+  "polo": "POLO B",
+  "municipio": "MUNICÍPIO B",
+  "aldeia": "ALDEIA DEMO 5",
+  "siasi": 90005,
+  "sistema": "SAA 1",
+  "tipo": "SAA",
+  "populacao": 530,
+  "pontosCaptacao": 1,
+  "pontosAmostragem": 3,
+  "tratamento": "SIM, COM DESINFECÇÃO",
+  "pontosPadrao": [
+   {
+    "identificacao": "Captação 6",
+    "tipo": "CAPTAÇÃO SUBTERRÂNEA"
+   },
+   {
+    "identificacao": "Reservatório 6",
+    "tipo": "SAÍDA DO RESERVATÓRIO COM ÁGUA TRATADA"
+   },
+   {
+    "identificacao": "Ponta de rede 6",
+    "tipo": "CASA (OU CHAFARIZ INDIVIDUAL)"
+   }
+  ]
+ },
+ {
+  "linha": 11,
+  "id": 7,
+  "polo": "POLO C",
+  "municipio": "MUNICÍPIO C",
+  "aldeia": "ALDEIA DEMO 6",
+  "siasi": 90006,
+  "sistema": "SAA 1",
+  "tipo": "SAA",
+  "populacao": 245,
+  "pontosCaptacao": 1,
+  "pontosAmostragem": 3,
+  "tratamento": "SIM, COM DESINFECÇÃO",
+  "pontosPadrao": [
+   {
+    "identificacao": "Captação 7",
+    "tipo": "CAPTAÇÃO SUBTERRÂNEA"
+   },
+   {
+    "identificacao": "Reservatório 7",
+    "tipo": "SAÍDA DO RESERVATÓRIO COM ÁGUA TRATADA"
+   },
+   {
+    "identificacao": "Ponta de rede 7",
+    "tipo": "CASA (OU CHAFARIZ INDIVIDUAL)"
+   }
+  ]
+ },
+ {
+  "linha": 12,
+  "id": 8,
+  "polo": "POLO C",
+  "municipio": "MUNICÍPIO C",
+  "aldeia": "ALDEIA DEMO 7",
+  "siasi": 90007,
+  "sistema": "SAC 1",
+  "tipo": "SAC",
+  "populacao": 38,
+  "pontosCaptacao": 1,
+  "pontosAmostragem": 3,
+  "tratamento": "SIM, SEM DESINFECÇÃO",
+  "pontosPadrao": [
+   {
+    "identificacao": "Captação 8",
+    "tipo": "CAPTAÇÃO SUBTERRÂNEA"
+   },
+   {
+    "identificacao": "Reservatório 8",
+    "tipo": "SAÍDA DO RESERVATÓRIO COM ÁGUA BRUTA"
+   },
+   {
+    "identificacao": "Ponta de rede 8",
+    "tipo": "CHAFARIZ (COLETIVO)"
+   }
+  ]
+ }
+]
