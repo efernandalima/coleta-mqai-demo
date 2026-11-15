@@ -8,7 +8,7 @@
 import { montarPrompt, TIPOS_DE_PEDIDO } from "../js/ia.js";
 
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
-const MODELO = "llama-3.3-70b-versatile";
+const MODELO = "openai/gpt-oss-120b";
 const LIMITE_MS = 15000;
 const TAMANHO_MAX_PEDIDO = 60000; // caracteres do JSON recebido
 
