@@ -4,14 +4,17 @@
 
 App de celular (PWA) para registrar coletas de **monitoramento da qualidade da água** em pequenas comunidades. Funciona **sem internet**, confere os resultados pela **Portaria 888/2021** na hora da digitação, gera o **relatório em PDF** e a **planilha**, e usa **IA** para sugerir a justificativa das não conformidades e resumir o mês.
 
-**Demo:** <https://SEU-PROJETO.vercel.app> <!-- TODO: trocar pelo link da Vercel -->
+**Demo:** [coleta-mqai-demo.vercel.app](https://coleta-mqai-demo.vercel.app/)
 
-<!-- TODO: GIF do fluxo completo (≈20 s): Carregar exemplos → Editar coleta fora do padrão → Sugerir justificativa (IA) → Relatório PDF -->
-<!-- ![Fluxo do app](docs/img/fluxo.gif) -->
+![Fluxo da demo: coleta, validação, sugestão da IA, painel e exportação](docs/img/demo.gif)
 
-| Nova coleta | Alerta de não conformidade + IA | Painel do mês | Relatório PDF |
-|---|---|---|---|
-| _print_ <!-- ![](docs/img/nova-coleta.png) --> | _print_ <!-- ![](docs/img/ia-justificativa.png) --> | _print_ <!-- ![](docs/img/painel.png) --> | _print_ <!-- ![](docs/img/relatorio.png) --> |
+| Nova coleta                                 | Validação automática                                      | Sugestão da IA                                 |
+| ------------------------------------------- | --------------------------------------------------------- | ---------------------------------------------- |
+| ![Nova coleta](docs/img/01-nova-coleta.png) | ![Coletas fora do padrão](docs/img/03-fora-do-padrao.png) | ![Sugestão da IA](docs/img/05-sugestao-ia.png) |
+
+| Alerta no ponto                                     | Painel do mês                            | Exportação                              |
+| --------------------------------------------------- | ---------------------------------------- | --------------------------------------- |
+| ![Alerta no ponto](docs/img/04-alerta-no-ponto.png) | ![Painel do mês](docs/img/06-painel.png) | ![Exportação](docs/img/07-exportar.png) |
 
 ## O problema
 
@@ -28,7 +31,7 @@ O mesmo dado era **digitado 3 vezes**. Cada redigitação era uma chance de erro
 O dado é digitado **uma vez, no local da coleta**, e tudo o mais sai dele:
 
 - **Formulário de campo** por sistema de abastecimento e ponto de coleta (captação → saída do tratamento → ponta de rede): pH, cor, turbidez, cloro, coliformes totais, E. coli e coordenadas por GPS.
-- **Validação imediata** pela Portaria 888/2021: o app separa o que está *fora do padrão* (exige justificativa) do que é *erro de digitação* (pH 15, coordenada sem o sinal de menos), que bloqueia a conclusão até ser corrigido.
+- **Validação imediata** pela Portaria 888/2021: o app separa o que está _fora do padrão_ (exige justificativa) do que é _erro de digitação_ (pH 15, coordenada sem o sinal de menos), que bloqueia a conclusão até ser corrigido.
 - **Funciona offline**: os dados ficam no aparelho; o app abre e salva sem sinal.
 - **Relatório em PDF** por coleta ou do mês inteiro, e **planilha .xlsx** com uma aba por mês — gerados no próprio celular.
 - **Painel do mês**: quais sistemas estão pendentes, aguardando análise, analisados ou já na planilha.
@@ -36,25 +39,25 @@ O dado é digitado **uma vez, no local da coleta**, e tudo o mais sai dele:
 ## Fluxo
 
 ```
-1. Nova coleta      em campo: sistema, pontos, coordenadas (GPS) → salva como "aguardando análise"
+1. Nova coleta        em campo: sistema, pontos, coordenadas (GPS) → salva como "aguardando análise"
 2. Registrar análise  no dia seguinte: resultados → alertas da Portaria em tempo real
-3. Justificar       se houver não conformidade: justificativa e ações (com sugestão da IA)
+3. Justificar         se houver não conformidade: justificativa e ações (com sugestão da IA)
 4. Concluir análise   o app confere pendências e libera a coleta
-5. Exportar         relatório PDF · planilha .xlsx · resumo do mês (IA)
+5. Exportar           relatório PDF · planilha .xlsx · resumo do mês (IA)
 ```
 
 **Para testar em 1 minuto:** aba **Salvas → Carregar exemplos** (6 coletas fictícias: 2 conformes, 3 fora do padrão e 1 aguardando análise) → **Editar** uma coleta fora do padrão → **Sugerir justificativa e ações (IA)** → aba **Exportar → Resumo do mês (IA)**. **Reiniciar demo** apaga tudo.
 
 ## Onde a IA entra
 
-| Onde | O que faz |
-|---|---|
-| Formulário, quando há parâmetro fora do padrão | **Sugerir justificativa e ações (IA)**: preenche o campo de justificativa com um texto editável, com o aviso *"Sugestão gerada por IA — revise antes de salvar"*. |
-| Tela Exportar | **Resumo do mês (IA)**: texto curto com as não conformidades por sistema e as prioridades de ação. |
+| Onde                                           | O que faz                                                                                                                                                         |
+| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Formulário, quando há parâmetro fora do padrão | **Sugerir justificativa e ações (IA)**: preenche o campo de justificativa com um texto editável, com o aviso _"Sugestão gerada por IA — revise antes de salvar"_. |
+| Tela Exportar                                  | **Resumo do mês (IA)**: texto curto com as não conformidades por sistema e as prioridades de ação.                                                                |
 
 Como foi construído:
 
-- **A chave nunca vai para o front-end.** O navegador chama `/api/sugerir`, uma função serverless (Vercel, sem dependências) que lê `GROQ_API_KEY` do ambiente e chama a API da Groq (modelo `llama-3.3-70b-versatile`).
+- **A chave nunca vai para o front-end.** O navegador chama `/api/sugerir`, uma função serverless (Vercel, sem dependências) que lê `GROQ_API_KEY` do ambiente e chama a API da Groq (modelo `openai/gpt-oss-120b`).
 - **Só dados técnicos saem do aparelho**: tipo de ponto, parâmetros, valores e limites da Portaria. Nomes de pessoas, coordenadas, datas e textos livres não são enviados (há teste automático para isso).
 - **O prompt é montado no servidor**, não no navegador. O servidor descarta qualquer campo que não seja um dado técnico conhecido e recalcula a conformidade com as mesmas regras do app — o que chega do navegador não é tratado como instrução.
 - **Prompt em português, técnico e restritivo**: usar somente os dados informados, não inventar valores, tratar parâmetro em branco como "não informado" e apresentar causas como hipóteses a verificar.
@@ -90,7 +93,7 @@ npx vercel dev  # com GROQ_API_KEY definida em um arquivo .env.local
 ### Publicar na Vercel
 
 1. Importe o repositório em **Add New → Project**, com Framework Preset **Other** (sem comando de build).
-2. Em **Settings → Environment Variables**, crie `GROQ_API_KEY` com uma chave gratuita de <https://console.groq.com>.
+2. Em **Settings → Environment Variables**, crie `GROQ_API_KEY` com uma chave de <https://console.groq.com>.
 3. Faça o deploy. Sem a chave, o app funciona normalmente e a IA mostra a resposta de exemplo.
 
 Ao publicar uma versão nova, aumente `VERSAO` em `sw.js` (e inclua arquivos novos em `ARQUIVOS`) para os aparelhos receberem a atualização.
@@ -112,12 +115,13 @@ js/
   ui/                 telas: formulário, lista, painel, exportar
 api/sugerir.js        função serverless que chama o LLM (a chave fica só aqui)
 data/sistemas.json    8 sistemas fictícios em 3 municípios fictícios
+docs/img/             GIF e prints da demo
 sw.js                 funcionamento offline
 tests/                testes automáticos
 ```
 
 ## Sobre
 
-Desenvolvido por **Fernanda Lima**.
+Desenvolvido por **Fernanda Lima** — [LinkedIn](https://www.linkedin.com/in/fernandaliima/).
 
-Demo com dados fictícios. A versão original é usada em campo e não é pública.
+Criado para resolver um problema real de campo: técnicos de saneamento que registravam o mesmo dado três vezes até chegar ao relatório. Esta demo usa dados fictícios; a versão original é usada em campo e não é pública.
