@@ -16,14 +16,22 @@ const TAMANHO_MAX_PEDIDO = 60000; // caracteres do JSON recebido
 function mesmaOrigem(req) {
   const origem = req.headers.origin;
   if (!origem) return true;
-  try { return new URL(origem).host === req.headers.host; } catch { return false; }
+  try {
+    return new URL(origem).host === req.headers.host;
+  } catch {
+    return false;
+  }
 }
 
 function lerCorpo(req) {
   let corpo = req.body;
   if (typeof corpo === "string") {
     if (corpo.length > TAMANHO_MAX_PEDIDO) return null;
-    try { corpo = JSON.parse(corpo); } catch { return null; }
+    try {
+      corpo = JSON.parse(corpo);
+    } catch {
+      return null;
+    }
   }
   if (!corpo || typeof corpo !== "object") return null;
   return JSON.stringify(corpo).length > TAMANHO_MAX_PEDIDO ? null : corpo;
@@ -51,7 +59,8 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: MODELO,
         temperature: 0.2,
-        max_tokens: 500,
+        max_tokens: 1500,
+        reasoning_effort: "low",
         messages: [
           { role: "system", content: prompt.system },
           { role: "user", content: prompt.user },
